@@ -17,9 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class Main2Activity extends AppCompatActivity {
 
@@ -29,7 +26,6 @@ public class Main2Activity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
 
-    String value;
 
 
     int cars= 0;
@@ -153,9 +149,5 @@ public class Main2Activity extends AppCompatActivity {
 
     }
 
-    private void showData(DataSnapshot dataSnapshot) {
 
-
-
-    }
 }
