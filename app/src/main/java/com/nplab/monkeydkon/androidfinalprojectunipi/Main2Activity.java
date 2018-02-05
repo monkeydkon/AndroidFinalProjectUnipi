@@ -80,22 +80,6 @@ public class Main2Activity extends AppCompatActivity {
 
 
 
-/*
-       ValueEventListener postListener = new ValueEventListener() {
-           @Override
-           public void onDataChange(DataSnapshot dataSnapshot) {
-               value = String.valueOf(dataSnapshot.child("users").getValue(String.class));
-           }
-
-           @Override
-           public void onCancelled(DatabaseError databaseError) {
-
-           }
-       }; */
-
-
-
-
 
 
 
