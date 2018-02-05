@@ -86,7 +86,7 @@ public class Main2Activity extends AppCompatActivity {
         }
 
 
-        // TO CODE
+     
         //Intent intent = new Intent(this,MainActivity.class);
         //startActivity(intent);
     }
