@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "574498828013",
+    "firebase_url": "https://final-android-project-unipi.firebaseio.com",
+    "project_id": "final-android-project-unipi",
+    "storage_bucket": "final-android-project-unipi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:574498828013:android:f23408083d66d6d7",
+        "android_client_info": {
+          "package_name": "com.nplab.monkeydkon.androidfinalprojectunipi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "574498828013-2a8le2fi5qp9b84t83fuhi2lufk7rsqi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nplab.monkeydkon.androidfinalprojectunipi",
+            "certificate_hash": "90f2b4eaae74c7e2e32e075a88d8665bf7ff2bc7"
+          }
+        },
+        {
+          "client_id": "574498828013-5ekb1vkbq3m48ffahosa8hji6qb168k2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLi1wMZOBvb3yQAyY3G-50a1lHHfJESFU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "574498828013-5ekb1vkbq3m48ffahosa8hji6qb168k2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
