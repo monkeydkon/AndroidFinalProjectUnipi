@@ -67,13 +67,21 @@ public class Main2Activity extends AppCompatActivity {
         String userName = editText3.getText().toString();
         String passWord = editText4.getText().toString();
         String carNumber1 = editText5.getText().toString();
+        String carNumber2 = editText6.getText().toString();
+        String carNumber3 = editText7.getText().toString();
 
         if(firstName.equals("") || lastName.equals("")|| userName.equals("") || passWord.equals("") || carNumber1.equals(""))
         {
-            Toast.makeText(this,"EMPTY",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"You left a field empty. Try again",Toast.LENGTH_SHORT).show();
         }else{
 
-            mDatabase.child("users").child(userName).setValue(firstName);
+            mDatabase.child("users").child(userName).child("firstname").setValue(firstName);
+            mDatabase.child("users").child(userName).child("lastname").setValue(lastName);
+            mDatabase.child("users").child(userName).child("password").setValue(passWord);
+            mDatabase.child("users").child(userName).child("car numbers").child("car number1").setValue(carNumber1);
+            mDatabase.child("users").child(userName).child("car numbers").child("car number2").setValue(carNumber2);
+            mDatabase.child("users").child(userName).child("car numbers").child("car number3").setValue(carNumber3);
+
 
         }
 
