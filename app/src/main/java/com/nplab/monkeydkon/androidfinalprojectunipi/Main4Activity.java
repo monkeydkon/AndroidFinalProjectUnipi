@@ -23,7 +23,7 @@ public class Main4Activity extends AppCompatActivity {
 
     DatePicker datePicker;
     TimePicker timePicker;
-    Button button6;
+    Button button6, button7;
 
 
     @Override
@@ -36,6 +36,7 @@ public class Main4Activity extends AppCompatActivity {
         datePicker= findViewById(R.id.datePicker);
         timePicker = findViewById(R.id.timePicker);
         button6 = findViewById(R.id.button6);
+        button7 = findViewById(R.id.button7);
 
         // create array list from simple list for not several "adds"
         final ArrayList<String> perioxes = new ArrayList<String>(asList("ilioupoli","alimos"));
@@ -91,5 +92,14 @@ public class Main4Activity extends AppCompatActivity {
         datePicker.setVisibility(View.GONE);
         button6.setVisibility(View.GONE);
         timePicker.setVisibility(View.VISIBLE);
+        button7.setVisibility(View.VISIBLE);
+
+    }
+
+    public void timeSet(View view){
+
+        String hour = timePicker.getCurrentHour().toString();
+        timePicker.getCurrentMinute();
+        Toast.makeText(this,hour,Toast.LENGTH_SHORT).show();
     }
 }
