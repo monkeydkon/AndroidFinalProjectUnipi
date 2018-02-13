@@ -23,7 +23,7 @@ public class Main4Activity extends AppCompatActivity {
 
     DatePicker datePicker;
     TimePicker timePicker;
-    Button button6, button7;
+    Button button6, button7, button8;
 
 
     @Override
@@ -37,6 +37,7 @@ public class Main4Activity extends AppCompatActivity {
         timePicker = findViewById(R.id.timePicker);
         button6 = findViewById(R.id.button6);
         button7 = findViewById(R.id.button7);
+        button8 = findViewById(R.id.button8);
 
         // create array list from simple list for not several "adds"
         final ArrayList<String> perioxes = new ArrayList<String>(asList("ilioupoli","alimos"));
@@ -68,6 +69,7 @@ public class Main4Activity extends AppCompatActivity {
                         listView.setVisibility(View.GONE);
                         datePicker.setVisibility(View.VISIBLE);
                         button6.setVisibility(View.VISIBLE);
+                        Toast.makeText(getApplicationContext(),"Select date of arrival",Toast.LENGTH_SHORT).show();
 
 
                     }
@@ -87,19 +89,32 @@ public class Main4Activity extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String formatedDate = simpleDateFormat.format(new Date(year, month, day));
 
-        Toast.makeText(this,formatedDate,Toast.LENGTH_SHORT).show();
 
         datePicker.setVisibility(View.GONE);
         button6.setVisibility(View.GONE);
         timePicker.setVisibility(View.VISIBLE);
         button7.setVisibility(View.VISIBLE);
 
+        Toast.makeText(this, "select time of arrival",Toast.LENGTH_SHORT).show();
+
     }
 
     public void timeSet(View view){
 
-        String hour = timePicker.getCurrentHour().toString();
-        timePicker.getCurrentMinute();
-        Toast.makeText(this,hour,Toast.LENGTH_SHORT).show();
+        String arrivalHour = timePicker.getCurrentHour().toString();
+        String arrivalMinute = timePicker.getCurrentMinute().toString();
+        Toast.makeText(this,"select time of leave",Toast.LENGTH_SHORT).show();
+        button7.setVisibility(View.GONE);
+        button8.setVisibility(View.VISIBLE);
+
+
+        //                                             C O N T I N U E
+        //                                             H    E    R   E
+    }
+
+    public void allSet(View view){
+        String dismissHour = timePicker.getCurrentHour().toString();
+        String dismissMinute = timePicker.getCurrentMinute().toString();
+        Toast.makeText(this, dismissHour+" "+dismissMinute,Toast.LENGTH_SHORT).show();
     }
 }
