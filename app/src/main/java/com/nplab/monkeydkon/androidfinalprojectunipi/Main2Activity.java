@@ -70,7 +70,7 @@ public class Main2Activity extends AppCompatActivity {
 
         final String firstName = editText.getText().toString();
         final String lastName = editText2.getText().toString();
-        final String userName = editText3.getText().toString();
+        final String userName = editText3.getText().toString().toLowerCase();
         final String passWord = editText4.getText().toString();
         final String carNumber1 = editText5.getText().toString();
         final String carNumber2 = editText6.getText().toString();

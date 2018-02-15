@@ -59,6 +59,7 @@ public class Main3Activity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(getApplicationContext(),"Wrong username or password. Try again.",Toast.LENGTH_SHORT).show();
 
                 }
             });

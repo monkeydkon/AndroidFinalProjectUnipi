@@ -1,7 +1,9 @@
 package com.nplab.monkeydkon.androidfinalprojectunipi;
 
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,6 +12,12 @@ import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,13 +33,26 @@ public class Main4Activity extends AppCompatActivity {
     TimePicker timePicker;
     Button button6, button7, button8;
 
+    private DatabaseReference mDatabase;
+
+    String parkingChosen;
+
+    ArrayList<String> theseis = new ArrayList<String>();
+
+    ListView listView;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
 
-        final ListView listView = findViewById(R.id.listView);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+
+        listView = findViewById(R.id.listView);
 
         datePicker= findViewById(R.id.datePicker);
         timePicker = findViewById(R.id.timePicker);
@@ -66,6 +87,8 @@ public class Main4Activity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                        parkingChosen = parking.get(i);
+
                         listView.setVisibility(View.GONE);
                         datePicker.setVisibility(View.VISIBLE);
                         button6.setVisibility(View.VISIBLE);
@@ -89,13 +112,13 @@ public class Main4Activity extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String formatedDate = simpleDateFormat.format(new Date(year, month, day));
 
+        Toast.makeText(getApplicationContext(),"Select time of arrival",Toast.LENGTH_SHORT).show();
 
         datePicker.setVisibility(View.GONE);
         button6.setVisibility(View.GONE);
         timePicker.setVisibility(View.VISIBLE);
         button7.setVisibility(View.VISIBLE);
 
-        Toast.makeText(this, "select time of arrival",Toast.LENGTH_SHORT).show();
 
     }
 
@@ -103,7 +126,11 @@ public class Main4Activity extends AppCompatActivity {
 
         String arrivalHour = timePicker.getCurrentHour().toString();
         String arrivalMinute = timePicker.getCurrentMinute().toString();
-        Toast.makeText(this,"select time of leave",Toast.LENGTH_SHORT).show();
+        String arriveGeneral = arrivalHour + " " + arrivalMinute;
+
+        Toast.makeText(getApplicationContext(),"Select date of leave",Toast.LENGTH_SHORT).show();
+
+
         button7.setVisibility(View.GONE);
         button8.setVisibility(View.VISIBLE);
 
@@ -113,8 +140,48 @@ public class Main4Activity extends AppCompatActivity {
     }
 
     public void allSet(View view){
+
         String dismissHour = timePicker.getCurrentHour().toString();
         String dismissMinute = timePicker.getCurrentMinute().toString();
-        Toast.makeText(this, dismissHour+" "+dismissMinute,Toast.LENGTH_SHORT).show();
+        String dismissGeneral = dismissHour + " " + dismissMinute;
+
+        timePicker.setVisibility(View.GONE);
+        listView.setVisibility(View.VISIBLE);
+        button8.setVisibility(View.GONE);
+
+
+
+
+
+
+        mDatabase.child("parkings").child(parkingChosen).child("theseis").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot giveMeTheKey : dataSnapshot.getChildren()){
+                    theseis.add(giveMeTheKey.getKey());
+                }
+                ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, theseis);
+                listView.setAdapter(arrayAdapter2);
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+        //Log.i("thesi",theseis.get(0));
+
+        //String test = theseis.get(0);
+       // Toast.makeText(this,test,Toast.LENGTH_SHORT).show();
+
+
+        // see if exists
+       // mDatabase.child("parkings").child(parkingChosen).child()
     }
 }
