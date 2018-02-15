@@ -1,5 +1,6 @@
 package com.nplab.monkeydkon.androidfinalprojectunipi;
 
+import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,7 +40,19 @@ public class Main4Activity extends AppCompatActivity {
 
     ArrayList<String> theseis = new ArrayList<String>();
 
+    ArrayList<String> pinakides = new ArrayList<String>();
+
     ListView listView;
+
+    String formatedDate;
+
+    String username;
+
+    String thesiWanted;
+
+    String arriveGeneral;
+
+    String dismissGeneral;
 
 
 
@@ -48,6 +61,9 @@ public class Main4Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
+
+        Intent intent = getIntent();
+        username = intent.getStringExtra("whoIsLoggedIn");
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -110,7 +126,7 @@ public class Main4Activity extends AppCompatActivity {
         int month= datePicker.getMonth();
         int year = datePicker.getYear() - 1900;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String formatedDate = simpleDateFormat.format(new Date(year, month, day));
+        formatedDate = simpleDateFormat.format(new Date(year, month, day));
 
         Toast.makeText(getApplicationContext(),"Select time of arrival",Toast.LENGTH_SHORT).show();
 
@@ -126,7 +142,7 @@ public class Main4Activity extends AppCompatActivity {
 
         String arrivalHour = timePicker.getCurrentHour().toString();
         String arrivalMinute = timePicker.getCurrentMinute().toString();
-        String arriveGeneral = arrivalHour + " " + arrivalMinute;
+        arriveGeneral = arrivalHour + " " + arrivalMinute;
 
         Toast.makeText(getApplicationContext(),"Select date of leave",Toast.LENGTH_SHORT).show();
 
@@ -141,9 +157,9 @@ public class Main4Activity extends AppCompatActivity {
 
     public void allSet(View view){
 
-        String dismissHour = timePicker.getCurrentHour().toString();
+        final String dismissHour = timePicker.getCurrentHour().toString();
         String dismissMinute = timePicker.getCurrentMinute().toString();
-        String dismissGeneral = dismissHour + " " + dismissMinute;
+        dismissGeneral = dismissHour + " " + dismissMinute;
 
         timePicker.setVisibility(View.GONE);
         listView.setVisibility(View.VISIBLE);
@@ -175,13 +191,55 @@ public class Main4Activity extends AppCompatActivity {
 
 
 
-        //Log.i("thesi",theseis.get(0));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                thesiWanted = theseis.get(i);
 
-        //String test = theseis.get(0);
-       // Toast.makeText(this,test,Toast.LENGTH_SHORT).show();
+                mDatabase.child("users").child(username).child("car numbers").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot giveMeTheCars : dataSnapshot.getChildren()){
+                            if(!giveMeTheCars.getValue().equals("")){
+                                pinakides.add(giveMeTheCars.getValue().toString());
+                            }
+                        }
+                        final ArrayAdapter<String> arrayAdapter3 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, pinakides);
+                        listView.setAdapter(arrayAdapter3);
 
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                final String pinakida = pinakides.get(i);
+                                mDatabase.child("parkings").child(parkingChosen).child("theseis").child(thesiWanted).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                            if(dataSnapshot.getValue().equals("free")){
+                                                Toast.makeText(getApplicationContext(),"hi",Toast.LENGTH_SHORT).show();
+                                                mDatabase.child("parkings").child(parkingChosen).child("theseis").child(thesiWanted).child(formatedDate).child(pinakida).child("arrive").setValue(arriveGeneral);
+                                                mDatabase.child("parkings").child(parkingChosen).child("theseis").child(thesiWanted).child(formatedDate).child(pinakida).child("leave").setValue(dismissGeneral);
+                                                Toast.makeText(getApplicationContext(),"Your seat is waiting for you",Toast.LENGTH_SHORT).show();
 
-        // see if exists
-       // mDatabase.child("parkings").child(parkingChosen).child()
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+        });
     }
 }
