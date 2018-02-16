@@ -1,5 +1,6 @@
 package com.nplab.monkeydkon.androidfinalprojectunipi;
 
+import android.app.Notification;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.ContactsContract;
@@ -287,9 +288,10 @@ public class Main4Activity extends AppCompatActivity {
         builder.setPositiveButton("confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                
+
                 mDatabase.child("parkings").child(parkingChosen).child("theseis").child(thesiWanted).child(formatedDate).child(pinakida).child("arrive").setValue(arriveGeneral);
                 mDatabase.child("parkings").child(parkingChosen).child("theseis").child(thesiWanted).child(formatedDate).child(pinakida).child("leave").setValue(dismissGeneral);
+                mDatabase.child("users").child(username).child("theseis").child(thesiWanted).setValue(true);
 
                 confirmed = true;
 
@@ -308,4 +310,5 @@ public class Main4Activity extends AppCompatActivity {
         });
         builder.show();
     }
+
 }

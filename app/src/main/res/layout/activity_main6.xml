@@ -6,4 +6,17 @@
     android:layout_height="match_parent"
     tools:context="com.nplab.monkeydkon.androidfinalprojectunipi.Main6Activity">
 
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="304dp"
+        android:layout_height="437dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
