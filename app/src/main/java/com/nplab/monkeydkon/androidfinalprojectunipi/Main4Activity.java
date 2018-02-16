@@ -58,6 +58,8 @@ public class Main4Activity extends AppCompatActivity {
 
     String dismissGeneral;
 
+    String pinakida;
+
 
 
 
@@ -214,19 +216,18 @@ public class Main4Activity extends AppCompatActivity {
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                final String pinakida = pinakides.get(i);
+                                pinakida = pinakides.get(i);
                                 mDatabase.child("parkings").child(parkingChosen).child("theseis").child(thesiWanted).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                                             // P E R I O R I S M O I
                                             if(true){
-
-                                                mDatabase.child("parkings").child(parkingChosen).child("theseis").child(thesiWanted).child(formatedDate).child(pinakida).child("arrive").setValue(arriveGeneral);
-                                                mDatabase.child("parkings").child(parkingChosen).child("theseis").child(thesiWanted).child(formatedDate).child(pinakida).child("leave").setValue(dismissGeneral);
-                                                showMessage("Seat is closed!","Do you want to close another one?");
-
-                                        }
+                                                showConfirmMessage();
+                                                if(confirmed==true){
+                                                    showMessage("Your seat is closed","Do you want another one?");
+                                                }
+                                            }
                                     }
 
                                     @Override
@@ -254,9 +255,7 @@ public class Main4Activity extends AppCompatActivity {
         builder.setCancelable(true);
         builder.setTitle(title);
         builder.setMessage(text);
-        final EditText input = new EditText(this);
-        input.setHint("asd");
-        builder.setView(input);
+
         builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -270,6 +269,41 @@ public class Main4Activity extends AppCompatActivity {
                 intent.putExtra("whoIsLoggedIn", username);
 
                 startActivity(intent);
+            }
+        });
+        builder.show();
+    }
+
+    boolean confirmed = false;
+
+    public void showConfirmMessage(){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle("Payment via Creditcard");
+        builder.setMessage("");
+        EditText number = new EditText(this);
+        number.setHint("eg 123 456 789");
+        builder.setView(number);
+        builder.setPositiveButton("confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                
+                mDatabase.child("parkings").child(parkingChosen).child("theseis").child(thesiWanted).child(formatedDate).child(pinakida).child("arrive").setValue(arriveGeneral);
+                mDatabase.child("parkings").child(parkingChosen).child("theseis").child(thesiWanted).child(formatedDate).child(pinakida).child("leave").setValue(dismissGeneral);
+
+                confirmed = true;
+
+            }
+        });
+        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                Intent intent = new Intent(getApplicationContext(),Main5Activity.class);
+                intent.putExtra("whoIsLoggedIn", username);
+
+                startActivity(intent);
+
             }
         });
         builder.show();
