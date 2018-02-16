@@ -49,7 +49,7 @@ public class Main3Activity extends AppCompatActivity {
 
                         Toast.makeText(getApplicationContext(),"You are now logged in.",Toast.LENGTH_SHORT).show();
 
-                        Intent intent = new Intent(getApplicationContext(),Main4Activity.class);
+                        Intent intent = new Intent(getApplicationContext(),Main5Activity.class);
                         intent.putExtra("whoIsLoggedIn", username);
                         startActivity(intent);
                     }else{

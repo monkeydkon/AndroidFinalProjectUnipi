@@ -1,7 +1,9 @@
 package com.nplab.monkeydkon.androidfinalprojectunipi;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.ContactsContract;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -214,11 +218,13 @@ public class Main4Activity extends AppCompatActivity {
                                 mDatabase.child("parkings").child(parkingChosen).child("theseis").child(thesiWanted).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                            if(dataSnapshot.getValue().equals("free")){
-                                                Toast.makeText(getApplicationContext(),"hi",Toast.LENGTH_SHORT).show();
+
+                                            // P E R I O R I S M O I
+                                            if(true){
+
                                                 mDatabase.child("parkings").child(parkingChosen).child("theseis").child(thesiWanted).child(formatedDate).child(pinakida).child("arrive").setValue(arriveGeneral);
                                                 mDatabase.child("parkings").child(parkingChosen).child("theseis").child(thesiWanted).child(formatedDate).child(pinakida).child("leave").setValue(dismissGeneral);
-                                                Toast.makeText(getApplicationContext(),"Your seat is waiting for you",Toast.LENGTH_SHORT).show();
+                                                showMessage("Seat is closed!","Do you want to close another one?");
 
                                         }
                                     }
@@ -241,5 +247,31 @@ public class Main4Activity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void showMessage(String title, String text){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(text);
+        final EditText input = new EditText(this);
+        input.setHint("asd");
+        builder.setView(input);
+        builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Main4Activity.this.recreate();
+            }
+        });
+        builder.setNegativeButton("no", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(getApplicationContext(),Main5Activity.class);
+                intent.putExtra("whoIsLoggedIn", username);
+
+                startActivity(intent);
+            }
+        });
+        builder.show();
     }
 }
