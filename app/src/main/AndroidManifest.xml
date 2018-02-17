@@ -22,7 +22,13 @@
         <activity android:name=".Main3Activity" />
         <activity android:name=".Main4Activity" />
         <activity android:name=".Main5Activity" />
-        <activity android:name=".Main6Activity"></activity>
+        <activity android:name=".Main6Activity" />
+
+        <receiver android:name=".MyNotification">
+            <intent-filter>
+                <action android:name="kon.action.DISPLAY_NOTIFICATION"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

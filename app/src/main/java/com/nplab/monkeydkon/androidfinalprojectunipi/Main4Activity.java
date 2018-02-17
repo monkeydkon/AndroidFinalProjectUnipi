@@ -268,6 +268,8 @@ public class Main4Activity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent(getApplicationContext(),Main5Activity.class);
                 intent.putExtra("whoIsLoggedIn", username);
+                intent.putExtra("dateOfParking", formatedDate);
+                intent.putExtra("pinakida", pinakida);
 
                 startActivity(intent);
             }
@@ -291,7 +293,7 @@ public class Main4Activity extends AppCompatActivity {
 
                 mDatabase.child("parkings").child(parkingChosen).child("theseis").child(thesiWanted).child(formatedDate).child(pinakida).child("arrive").setValue(arriveGeneral);
                 mDatabase.child("parkings").child(parkingChosen).child("theseis").child(thesiWanted).child(formatedDate).child(pinakida).child("leave").setValue(dismissGeneral);
-                mDatabase.child("users").child(username).child("theseis").child(thesiWanted).setValue(true);
+                mDatabase.child("users").child(username).child("theseis").child(parkingChosen).child(thesiWanted).setValue(true);
 
                 confirmed = true;
 
@@ -303,12 +305,18 @@ public class Main4Activity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(),Main5Activity.class);
                 intent.putExtra("whoIsLoggedIn", username);
+                intent.putExtra("dateOfParking", formatedDate);
+                intent.putExtra("pinakida", pinakida);
 
                 startActivity(intent);
 
             }
         });
         builder.show();
+    }
+
+    public void sendNotification(){
+
     }
 
 }
