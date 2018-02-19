@@ -144,14 +144,15 @@ public class Main4Activity extends AppCompatActivity {
 
 
     }
-
+    String arrivalHour;
+    String arrivalMinute;
     public void timeSet(View view){
 
-        String arrivalHour = timePicker.getCurrentHour().toString();
-        String arrivalMinute = timePicker.getCurrentMinute().toString();
+        arrivalHour = timePicker.getCurrentHour().toString();
+        arrivalMinute = timePicker.getCurrentMinute().toString();
         arriveGeneral = arrivalHour + " " + arrivalMinute;
 
-        Toast.makeText(getApplicationContext(),"Select date of leave",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),arrivalHour,Toast.LENGTH_SHORT).show();
 
 
         button7.setVisibility(View.GONE);
@@ -161,16 +162,52 @@ public class Main4Activity extends AppCompatActivity {
         //                                             C O N T I N U E
         //                                             H    E    R   E
     }
-
+    String dismissHour;
+    String dismissMinute;
+    String from;
+    String to;
     public void allSet(View view){
 
-        final String dismissHour = timePicker.getCurrentHour().toString();
-        String dismissMinute = timePicker.getCurrentMinute().toString();
+        mDatabase.child("parkings").child(parkingChosen).child("open").child("from").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                from = dataSnapshot.getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mDatabase.child("parkings").child(parkingChosen).child("open").child("to").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                to = dataSnapshot.getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        dismissHour = timePicker.getCurrentHour().toString();
+        dismissMinute = timePicker.getCurrentMinute().toString();
         dismissGeneral = dismissHour + " " + dismissMinute;
 
-        timePicker.setVisibility(View.GONE);
-        listView.setVisibility(View.VISIBLE);
-        button8.setVisibility(View.GONE);
+        Toast.makeText(this,dismissHour,Toast.LENGTH_SHORT).show();
+
+        if(Integer.parseInt(arrivalHour) > Integer.parseInt(dismissHour) || (Integer.parseInt(arrivalHour) == Integer.parseInt(dismissHour) && Integer.parseInt(arrivalMinute)>Integer.parseInt(dismissMinute))
+               // M A K E   T H I S   F U C K I N G   S H I T || Integer.parseInt(arrivalHour) < Integer.parseInt(from) || Integer.parseInt(dismissHour) > Integer.parseInt(to)
+                || (Integer.parseInt(arrivalHour) == Integer.parseInt(dismissHour) && Integer.parseInt(arrivalMinute) == Integer.parseInt(dismissMinute))
+                ) {
+
+            Toast.makeText(this,"wrong hour pick",Toast.LENGTH_SHORT).show();
+        }else{
+            timePicker.setVisibility(View.GONE);
+            listView.setVisibility(View.VISIBLE);
+            button8.setVisibility(View.GONE);
 
 
 
@@ -249,6 +286,7 @@ public class Main4Activity extends AppCompatActivity {
 
             }
         });
+      }
     }
 
     public void showMessage(String title, String text){

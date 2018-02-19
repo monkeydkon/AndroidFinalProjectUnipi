@@ -35,34 +35,52 @@ public class Main3Activity extends AppCompatActivity {
 
     public void login(View view){
 
-        final String username = editText8.getText().toString();
+        final String username = editText8.getText().toString().toLowerCase();
         final String password = editText9.getText().toString();
 
         if(username.equals("") || password.equals("")){
             Toast.makeText(this,"You left at least a field empty. Try again.",Toast.LENGTH_SHORT).show();
         }else{
 
-            mDatabase.child("users").child(username).child("password").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            mDatabase.child("users").child(username).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.getValue().toString().equals(password)){
 
-                        Toast.makeText(getApplicationContext(),"You are now logged in.",Toast.LENGTH_SHORT).show();
+                    if(dataSnapshot.exists()){
+                        mDatabase.child("users").child(username).child("password").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if(dataSnapshot.getValue().toString().equals(password)){
 
-                        Intent intent = new Intent(getApplicationContext(),Main5Activity.class);
-                        intent.putExtra("whoIsLoggedIn", username);
-                        startActivity(intent);
+                                    Toast.makeText(getApplicationContext(),"You are now logged in.",Toast.LENGTH_SHORT).show();
+
+                                    Intent intent = new Intent(getApplicationContext(),Main5Activity.class);
+                                    intent.putExtra("whoIsLoggedIn", username);
+                                    startActivity(intent);
+                                }else{
+                                    Toast.makeText(getApplicationContext(),"Wrong password. Try again.",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }else{
                         Toast.makeText(getApplicationContext(),"Wrong username or password. Try again.",Toast.LENGTH_SHORT).show();
                     }
+
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    Toast.makeText(getApplicationContext(),"Wrong username or password. Try again.",Toast.LENGTH_SHORT).show();
 
                 }
             });
+
+
 
         }
 
