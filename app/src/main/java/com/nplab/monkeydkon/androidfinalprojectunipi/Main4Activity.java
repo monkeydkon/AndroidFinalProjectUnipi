@@ -199,7 +199,7 @@ public class Main4Activity extends AppCompatActivity {
         Toast.makeText(this,dismissHour,Toast.LENGTH_SHORT).show();
 
         if(Integer.parseInt(arrivalHour) > Integer.parseInt(dismissHour) || (Integer.parseInt(arrivalHour) == Integer.parseInt(dismissHour) && Integer.parseInt(arrivalMinute)>Integer.parseInt(dismissMinute))
-               // M A K E   T H I S   F U C K I N G   S H I T || Integer.parseInt(arrivalHour) < Integer.parseInt(from) || Integer.parseInt(dismissHour) > Integer.parseInt(to)
+                || Integer.parseInt(arrivalHour) < Integer.parseInt(from) || Integer.parseInt(dismissHour) > Integer.parseInt(to)
                 || (Integer.parseInt(arrivalHour) == Integer.parseInt(dismissHour) && Integer.parseInt(arrivalMinute) == Integer.parseInt(dismissMinute))
                 ) {
 
